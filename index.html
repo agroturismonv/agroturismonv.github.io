@@ -1,188 +1,115 @@
 <!DOCTYPE html>
 <html lang="pt-BR" x-data="sliderApp()" x-init="start()">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turismo | Nova Venécia</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-  <script src="dados/controller.js"></script>
-
-  <style>
-    [x-cloak] { display: none !important; }
-
-    /* Transição suave do slider vertical */
-    .slider-container {
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Zoom suave nos cards do menu */
-    .ponto-card:hover img { transform: scale(1.1); }
-
-    /* Estilização da Scrollbar para o Modal */
-    .custom-scroll::-webkit-scrollbar { width: 5px; }
-    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #ffc107; border-radius: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turismo | Nova Venécia</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="dados/controller.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .slider-container { transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .ponto-card img { opacity: 0.5; transition: all 0.5s ease; }
+        .ponto-card:hover img { opacity: 0.95; transform: scale(1.1); }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #ffc107; border-radius: 10px; }
+        body, html { height: 100%; overflow: hidden; }
+    </style>
 </head>
+<body class="bg-gray-900 text-gray-800 flex flex-col">
 
-<body class="bg-gray-900 text-gray-800 h-screen flex flex-col overflow-hidden">
-
-  <header class="bg-[#0f5132] text-white z-50 shadow-lg flex-shrink-0">
-    <div class="flex justify-between items-center p-4 md:px-12 w-full">
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="flex items-center gap-2">
-          <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 flex-shrink-0">
-          <h1 class="text-sm md:text-xl font-black uppercase tracking-tighter">DESCOBRINDO O AGROTURISMO</h1>
-        </a>
-        <button @click="showMenu = true"
-          class="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full text-xs font-bold transition-all border border-white/20">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-          </svg>
-          <span x-text="t.menu"></span>
-        </button>
-      </div>
-
-      <div class="flex justify-end gap-3">
-        <button @click="setLang('pt')" :class="lang === 'pt'? 'scale-110' : 'opacity-60'"><span class="fi fi-br"></span></button>
-        <button @click="setLang('en')" :class="lang === 'en'? 'scale-110' : 'opacity-60'"><span class="fi fi-us"></span></button>
-        <button @click="setLang('es')" :class="lang === 'es'? 'scale-110' : 'opacity-60'"><span class="fi fi-es"></span></button>
-      </div>
-    </div>
-  </header>
-
-  <main class="flex-1 relative overflow-hidden bg-black">
-    <div class="h-full flex flex-col slider-container" :style="`transform: translateY(-${current * 100}%)`">
-      <template x-for="(slide, i) in slides" :key="slide.id">
-        <div class="h-full w-full relative flex items-center justify-center flex-shrink-0">
-          <img :src="slide.cover" class="absolute inset-0 w-full h-full object-cover opacity-70">
-          <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
-          
-          <div class="relative z-10 text-white text-center px-4 max-w-4xl">
-            <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic drop-shadow-2xl"
-              x-text="slide.texts[lang]?.title"></h2>
-            <p class="mt-2 text-lg md:text-2xl font-light opacity-90" x-text="slide.texts[lang]?.subtitle"></p>
-            <a :href="`layout/circuitos.html?id=${slide.id}`"
-              class="inline-block mt-6 bg-[#ffc107] hover:bg-white text-[#0f5132] px-8 py-3 rounded-full font-black text-lg transition-all transform hover:scale-110 shadow-xl">
-              <span x-text="t.explore"></span>
-            </a>
-          </div>
+    <header class="bg-[#0f5132] text-white z-50 shadow-lg flex-shrink-0">
+        <div class="flex justify-between items-center p-4 md:px-12 w-full">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-2">
+                    <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 flex-shrink-0">
+                    <h1 class="text-sm md:text-xl font-black uppercase tracking-tighter text-white">DESCOBRINDO O AGROTURISMO</h1>
+                </a>
+            </div>
+            <div class="flex justify-end gap-3">
+                <button @click="setLang('pt')" :class="lang === 'pt'? 'scale-110' : 'opacity-60'"><span class="fi fi-br"></span></button>
+                <button @click="setLang('en')" :class="lang === 'en'? 'scale-110' : 'opacity-60'"><span class="fi fi-us"></span></button>
+                <button @click="setLang('es')" :class="lang === 'es'? 'scale-110' : 'opacity-60'"><span class="fi fi-es"></span></button>
+            </div>
         </div>
-      </template>
-    </div>
-
-    <div class="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20" x-show="slides.length > 1">
-      <template x-for="(slide, index) in slides" :key="slide.id">
-        <button @click="current = index" class="w-2 rounded-full transition-all duration-500"
-          :class="current === index ? 'h-10 bg-[#ffc107]' : 'h-2 bg-white/30'"></button>
-      </template>
-    </div>
-  </main>
-
-  <div x-show="showMenu" x-cloak 
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0 scale-95" 
-    x-transition:enter-end="opacity-100 scale-100"
-    class="fixed inset-0 z-[60] flex flex-col backdrop-blur-md"
-    style="background-color: rgba(15, 81, 50, 0.7);">
-    
-    <header class="p-4 md:px-12 flex-shrink-0">
-      <div class="grid grid-cols-3 items-center w-full text-white">
-        <div></div>
-        <div class="text-center">
-          <h2 class="text-lg md:text-xl font-black uppercase tracking-tighter whitespace-nowrap" x-text="t.menuTitle"></h2>
-        </div>
-        <div class="flex justify-end">
-          <button @click="showMenu = false" class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all hover:rotate-90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </div>
     </header>
 
-    <div class="flex-1 overflow-y-auto custom-scroll px-6 pb-12">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-full">
-        <template x-for="circuito in slides" :key="circuito.id">
-          <a :href="`layout/circuitos.html?id=${circuito.id}`"
-            class="ponto-card relative h-[45vh] rounded-3xl overflow-hidden border border-white/10 group shadow-2xl">
-            <img :src="circuito.cover" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0f5132] via-transparent to-black/20"></div>
-            <div class="relative h-full flex flex-col items-center justify-center text-center p-6 z-10 text-white">
-              <h3 class="text-3xl font-black uppercase italic tracking-tighter" x-text="circuito.texts[lang].title"></h3>
-              <p class="mt-4 text-sm opacity-80 max-w-xs line-clamp-2" x-text="circuito.texts[lang].subtitle"></p>
-              <div class="mt-6 px-6 py-2 border-2 border-[#ffc107] text-[#ffc107] rounded-full font-black text-xs uppercase group-hover:bg-[#ffc107] group-hover:text-[#0f5132] transition-all">
-                EXPLORAR</div>
-            </div>
-          </a>
-        </template>
-      </div>
-    </div>
-  </div>
-
-  <footer class="bg-[#1a1a1a] text-gray-400 py-3 px-6 md:px-12 border-t border-gray-800 flex-shrink-0">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-2 w-full text-white font-bold text-xs">
-      <div class="flex items-center gap-3">
-        <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 opacity-60 grayscale">
-        <div class="text-left border-l border-gray-700 pl-3">
-          <p>Prefeitura de Nova Venécia</p>
-          <p class="text-[9px] uppercase tracking-widest opacity-50">Secretaria de Cultura</p>
+    <main class="flex-1 relative overflow-hidden bg-black">
+        <div class="h-full flex flex-col slider-container" :style="`transform: translateY(-${current * 100}%)`">
+            <template x-for="(slide, i) in slides" :key="slide.id">
+                <div class="h-full w-full relative flex items-center justify-center flex-shrink-0 p-4">
+                    <img :src="slide.cover" class="absolute inset-0 w-full h-full object-cover opacity-70">
+                    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
+                    <div class="relative z-10 text-white text-center px-4 max-w-4xl mx-auto">
+                        <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic drop-shadow-2xl leading-none mb-4" x-text="slide.texts[lang]?.title"></h2>
+                        <p class="text-lg md:text-2xl font-light opacity-90 mb-8" x-text="slide.texts[lang]?.subtitle"></p>
+                        <a :href="`layout/circuitos.html?id=${slide.id}`" class="inline-block bg-[#ffc107] text-[#0f5132] px-10 py-4 rounded-full font-black text-lg shadow-xl hover:scale-110 transition-transform">EXPLORAR</a>
+                    </div>
+                </div>
+            </template>
         </div>
-      </div>
-      <p>© 2026 | IFES Campus Nova Venécia</p>
+
+        <button @click="showMenu = true" class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[40] bg-[#ffc107] text-[#0f5132] p-4 md:px-8 md:py-3 rounded-full font-black shadow-2xl flex items-center gap-2 border-2 border-[#0f5132] hover:scale-110 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+            <span class="hidden md:inline" x-text="t.menu"></span>
+        </button>
+    </main>
+
+    <div x-show="showMenu" x-cloak class="fixed inset-0 z-[60] flex flex-col backdrop-blur-md" style="background-color: rgba(15, 81, 50, 0.75);">
+        <header class="p-6 flex justify-between items-center text-white">
+            <div class="w-10"></div>
+            <h2 class="text-2xl font-black uppercase italic" x-text="t.menuTitle"></h2>
+            <button @click="showMenu = false" class="bg-white/10 p-2 rounded-full text-2xl">✕</button>
+        </header>
+        <div class="flex-1 overflow-y-auto custom-scroll px-6 pb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="circuito in slides" :key="circuito.id">
+                    <a :href="`layout/circuitos.html?id=${circuito.id}`" class="ponto-card relative h-[45vh] rounded-[2rem] overflow-hidden group shadow-2xl border border-white/10">
+                        <img :src="circuito.cover" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f5132] via-transparent to-black/20"></div>
+                        <div class="relative h-full flex flex-col items-center justify-center p-6 text-center text-white">
+                            <h3 class="text-3xl font-black uppercase italic" x-text="circuito.texts[lang].title"></h3>
+                            <p class="text-sm opacity-90 mt-2" x-text="circuito.texts[lang].subtitle"></p>
+                        </div>
+                    </a>
+                </template>
+            </div>
+        </div>
     </div>
-  </footer>
 
-  <script>
-    function sliderApp() {
-      return {
-        current: 0,
-        showMenu: false,
-        lang: localStorage.getItem('user_lang') || 'pt', // Persistência de idioma
-        slides: [],
-        timer: null,
+    <footer class="bg-[#1a1a1a] text-white py-4 px-12 border-t border-gray-800 flex-shrink-0">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+            <div class="flex items-center gap-3">
+                <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="w-8">
+                <div class="text-left border-l border-gray-700 pl-3 leading-tight font-bold">
+                    <p class="text-xs">Prefeitura de Nova Venécia</p>
+                    <p class="text-[9px] uppercase opacity-50 font-normal tracking-widest">Secretaria de Cultura e Turismo</p>
+                </div>
+            </div>
+            <p class="text-[10px] md:text-xs font-bold">© 2026 | Desenvolvido por IFES Campus Nova Venécia</p>
+        </div>
+    </footer>
 
-        // Traduções da interface
-        texts: {
-          pt: { explore: 'QUERO CONHECER A REGIÃO', menu: 'VER TODOS CIRCUITOS', menuTitle: 'Nossos Circuitos Turísticos' },
-          en: { explore: 'EXPLORE THE REGION', menu: 'VIEW ALL CIRCUITS', menuTitle: 'Our Tourist Circuits' },
-          es: { explore: 'QUIERO CONOCER LA REGIÓN', menu: 'VER TODOS LOS CIRCUITOS', menuTitle: 'Nuestros Circuitos Turísticos' }
-        },
-
-        get t() { return this.texts[this.lang] },
-
-        setLang(newLang) {
-          this.lang = newLang;
-          localStorage.setItem('user_lang', newLang);
-        },
-
-        start() {
-          const popular = () => {
-            if (window.LISTA_CIRCUITOS && window.LISTA_CIRCUITOS.length > 0) {
-              this.slides = window.LISTA_CIRCUITOS;
-              this.current = 0;
-              if (this.slides.length > 1 && !this.timer) {
-                this.timer = setInterval(() => this.next(), 6000); // Slider automático
-              }
+    <script>
+        function sliderApp() {
+            return {
+                current: 0, showMenu: false, lang: localStorage.getItem('user_lang') || 'pt', slides: [], timer: null,
+                texts: {
+                    pt: { menu: 'VER TODOS CIRCUITOS', menuTitle: 'Circuitos Turísticos' },
+                    en: { menu: 'VIEW ALL CIRCUITS', menuTitle: 'Tourist Circuits' },
+                    es: { menu: 'VER TODOS LOS CIRCUITOS', menuTitle: 'Circuitos Turísticos' }
+                },
+                get t() { return this.texts[this.lang] },
+                setLang(l) { this.lang = l; localStorage.setItem('user_lang', l); },
+                start() {
+                    const load = () => { if(window.LISTA_CIRCUITOS) { this.slides = window.LISTA_CIRCUITOS; if(this.slides.length > 1) this.timer = setInterval(() => this.next(), 6000); }};
+                    load(); window.addEventListener('locais-ready', load);
+                },
+                next() { if(!this.showMenu) this.current = (this.current + 1) % this.slides.length; }
             }
-          };
-          popular();
-          window.addEventListener('locais-ready', popular);
-        },
-
-        next() {
-          if (!this.showMenu) { 
-            this.current = (this.current + 1) % this.slides.length;
-          }
         }
-      }
-    }
-  </script>
+    </script>
 </body>
 </html>

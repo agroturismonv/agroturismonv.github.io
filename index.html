@@ -2,23 +2,22 @@
 <!-- Documento HTML5 -->
 <html lang="pt-BR" x-data="sliderApp()" x-init="start()">
 <head>
-  <!-- Codificação de caracteres -->
   <meta charset="UTF-8">
-
-  <!-- Configuração de viewport para responsividade -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Título da página -->
   <title>Turismo | Nova Venécia</title>
 
-  <!-- Ícones de bandeiras (idiomas) -->
+  <!-- Ícones de bandeiras -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
 
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Alpine.js para interatividade -->
+  <!-- Alpine.js -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- DADOS DOS LOCAIS -->
+  <script src="dados/controller/locais.js"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -27,7 +26,6 @@
 <header class="bg-[#0f5132] text-white fixed w-full z-50">
   <div class="flex justify-between items-center p-4 md:px-10">
 
-    <!-- Logo + título -->
     <a href="index.html" class="flex items-center gap-2 max-w-[70%]">
       <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 flex-shrink-0">
 
@@ -56,31 +54,25 @@
 <!-- ================= SLIDER PRINCIPAL ================= -->
 <section class="w-full h-screen overflow-hidden relative bg-black">
 
-  <!-- Container dos slides com animação vertical -->
   <div class="h-full flex flex-col transition-transform duration-1000 ease-in-out"
        :style="`transform: translateY(-${current * 100}vh)`">
 
-    <!-- Loop dos slides -->
-    <template x-for="(slide, i) in slides" :key="i">
+    <template x-for="(slide, i) in slides" :key="slide.id">
       <div class="h-[100vh] w-full relative flex items-center justify-center flex-shrink-0">
 
-        <!-- Imagem de fundo -->
-        <img :src="slide.img"
+        <img :src="slide.cover"
              class="absolute inset-0 w-full h-full object-cover opacity-90">
 
-        <!-- Gradiente sobre a imagem -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
 
-        <!-- Conteúdo textual do slide -->
         <div class="relative z-10 text-white text-center px-4 max-w-4xl">
           <h2 class="text-5xl md:text-8xl font-black tracking-tighter drop-shadow-2xl uppercase"
-              x-text="slide.title[lang]"></h2>
+              x-text="slide.texts[lang]?.title || slide.texts.pt.title"></h2>
 
           <p class="mt-4 text-xl md:text-3xl font-light drop-shadow-lg"
-             x-text="slide.subtitle[lang]"></p>
+             x-text="slide.texts[lang]?.subtitle || slide.texts.pt.subtitle"></p>
 
-          <!-- Botão de ação -->
-          <a :href="slide.link"
+          <a :href="`local.html?id=${slide.id}`"
              class="inline-block mt-10 bg-[#ffc107] hover:bg-[#ffdb4d] text-[#0f5132]
                     px-10 py-4 rounded-full font-black text-xl transition-all transform hover:scale-110 shadow-2xl">
             <span x-text="t.explore"></span>
@@ -90,22 +82,13 @@
     </template>
   </div>
 
-  <!-- ================= CONTROLES DO SLIDER ================= -->
+  <!-- CONTROLES -->
   <div class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2
               flex flex-col gap-3 md:gap-4 z-20 items-center">
 
-    <!-- Botão subir slide -->
-    <button
-      @click="prev()"
-      class="bg-black/30 hover:bg-white hover:text-black backdrop-blur-md text-white
-             rounded-full w-10 h-10 md:w-14 md:h-14
-             flex items-center justify-center transition
-             border border-white/30 text-base md:text-xl font-bold shadow-lg">
-      ▲
-    </button>
+    <button @click="prev()" class="text-white">▲</button>
 
-    <!-- Indicadores (dots) -->
-    <template x-for="(slide, index) in slides" :key="index">
+    <template x-for="(slide, index) in slides" :key="slide.id">
       <button
         @click="current = index"
         class="w-2 md:w-3 rounded-full transition-all duration-300 self-end"
@@ -115,19 +98,11 @@
       </button>
     </template>
 
-    <!-- Botão descer slide -->
-    <button
-      @click="next()"
-      class="bg-black/30 hover:bg-white hover:text-black backdrop-blur-md text-white
-             rounded-full w-10 h-10 md:w-14 md:h-14
-             flex items-center justify-center transition
-             border border-white/30 text-base md:text-xl font-bold shadow-lg">
-      ▼
-    </button>
+    <button @click="next()" class="text-white">▼</button>
   </div>
 </section>
 
-<!-- ================= SEÇÃO DE APRESENTAÇÃO ================= -->
+<!-- ================= APRESENTAÇÃO ================= -->
 <section class="max-w-4xl mx-auto py-20 px-6 text-center">
   <h3 class="text-4xl md:text-5xl font-extrabold text-[#0f5132] mb-6" x-text="t.welcome"></h3>
   <div class="w-32 h-2 bg-[#ffc107] mx-auto rounded-full mb-8"></div>
@@ -136,85 +111,49 @@
 
 <!-- ================= RODAPÉ ================= -->
 <footer class="bg-[#1a1a1a] text-gray-400 text-center p-10 border-t border-gray-800">
-  <div class="mb-6 opacity-50 flex justify-center gap-6">
-    <span class="text-xs tracking-widest uppercase">Ecoturismo</span>
-    <span class="text-xs tracking-widest uppercase">Cultura</span>
-    <span class="text-xs tracking-widest uppercase">História</span>
-  </div>
-
-  <img src="../imagens/brasao/brasao_nv.png" alt="Logo" width="50dm" class="mx-auto mb-4">
+  <img src="imagens/brasao/brasao_nv.png" alt="Logo" class="mx-auto mb-4 w-12">
 
   <p class="text-white font-bold text-lg">Prefeitura Municipal de Nova Venécia</p>
   <p class="text-sm mt-2 italic">Espírito Santo, Brasil</p>
 </footer>
 
-<!-- ================= SCRIPT ALPINE ================= -->
 <script>
 function sliderApp() {
   return {
-    // Índice do slide atual
     current: 0,
-
-    // Idioma padrão
     lang: 'pt',
+    slides: Object.values(LOCAIS),
 
-    // Lista de slides
-    slides: [
-      {
-        img: 'https://cdn.esbrasil.com.br/wp-content/uploads/2025/01/Nova-Venecia_nx081212001-1-1536x1024.jpg',
-        link: 'local.html?id=elefante',
-        title: { pt: 'Pedra do Elefante', en: 'Elephant Rock', es: 'Piedra del Elefante' },
-        subtitle: { pt: 'O Gigante de Granito capixaba', en: 'The Granite Giant of Espírito Santo', es: 'El Gigante de Granito' }
-      },
-      {
-        img: '../imagens/fortaleza/fortaleza.jpg',
-        link: 'local.html?id=fortaleza',
-        title: { pt: 'Pedra da Fortaleza', en: 'Fortress Rock', es: 'Piedra de la Fortaleza' },
-        subtitle: { pt: 'Onde o céu toca a montanha', en: 'Where the sky touches the mountain', es: 'Donde el cielo toca la montaña' }
-      },
-      {
-        img: '../imagens/boa vista/cachoeira.jpg',
-        link: 'local.html?id=cachoeiraBoaVista',
-        title: { pt: 'Cachoeira Boa Vista', en: 'Boa Vista Waterfall', es: 'Cascada Boa Vista' },
-        subtitle: { pt: 'Quedas d\'água e lazer em meio à natureza', en: 'Waterfalls and leisure in the middle of nature', es: 'Cascadas y ocio en plena naturaleza' }
-      },
-      {
-        img: 'https://terracapixaba.com/wp-content/uploads/2024/02/gameleira-de-nova-venecia-2.webp',
-        link: 'local.html?id=gameleira',
-        title: { pt: 'Caminhos de Fé', en: 'Paths of Faith', es: 'Caminos de Fe' },
-        subtitle: { pt: 'Santuário Mãe Peregrina e Gameleira', en: 'Sanctuary and Ancient Trees', es: 'Santuario y Árboles Milenarios' }
-      }
-    ],
-
-    // Textos por idioma
     texts: {
       pt: {
         explore: 'QUERO CONHECER',
         welcome: 'Descubra Nova Venécia',
-        desc: 'Explore o destino mais surpreendente do Noroeste Capixaba. De monumentos naturais colossais a uma herança cultural vibrante.'
+        desc: 'Explore o destino mais surpreendente do Noroeste Capixaba.'
       },
       en: {
         explore: 'EXPLORE NOW',
         welcome: 'Discover Nova Venécia',
-        desc: 'Explore the most surprising destination in the Northwest of Espírito Santo. From colossal natural monuments to a vibrant cultural heritage.'
+        desc: 'Explore the most surprising destination.'
       },
       es: {
         explore: 'QUIERO CONOCER',
         welcome: 'Descubra Nova Venécia',
-        desc: 'Explore el destino más sorprendente del Noroeste de Espírito Santo. Desde monumentos naturales colosales hasta una herencia cultural vibrante.'
+        desc: 'Explore el destino más sorprendente.'
       }
     },
 
-    // Getter para textos do idioma atual
-    get t() { return this.texts[this.lang] },
+    get t() {
+      return this.texts[this.lang]
+    },
 
-    // Avança slide
-    next() { this.current = (this.current + 1) % this.slides.length },
+    next() {
+      this.current = (this.current + 1) % this.slides.length
+    },
 
-    // Retrocede slide
-    prev() { this.current = (this.current - 1 + this.slides.length) % this.slides.length },
+    prev() {
+      this.current = (this.current - 1 + this.slides.length) % this.slides.length
+    },
 
-    // Inicia autoplay
     start() {
       this.timer = setInterval(() => this.next(), 5000)
     }

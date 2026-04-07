@@ -49,5 +49,9 @@ window.LOCAL_CACHOEIRA = Object.freeze({
         location: 'Cómo llegar',
         qr: 'Escanee el código QR para abrir Google Maps'
       }
-    }
+    },
+
+  RAvisionButton: 'Veja em 360°',
+  RAvisionScreen: true,
+  RAvisionlink: 'https://novavenecia360.com.br/',
 })

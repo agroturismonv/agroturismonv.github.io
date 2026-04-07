@@ -1,14 +1,14 @@
 window.LOCAL_FORTALEZA = Object.freeze({
   id: 'fortaleza',
 
-  cover: 'imagens/fortaleza/fortaleza.jpg',
+  cover: '../imagens/fortaleza/fortaleza.jpg',
 
-  hero: 'imagens/fortaleza/fortaleza-2.webp',
+  hero: '../imagens/fortaleza/fortaleza-2.webp',
 
   gallery: [
-    'imagens/fortaleza/fortaleza.jpg',
-    'imagens/fortaleza/fortaleza-2.webp',
-    'imagens/fortaleza/fortaleza-3.png'
+    '../imagens/fortaleza/fortaleza.jpg',
+    '../imagens/fortaleza/fortaleza-2.webp',
+    '../imagens/fortaleza/fortaleza-3.png'
   ],
 
   location: {

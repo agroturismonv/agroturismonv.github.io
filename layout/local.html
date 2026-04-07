@@ -50,7 +50,7 @@
   </style>
 </head>
 
-<body class="bg-white text-gray-900 h-screen flex flex-col overflow-hidden">
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
   <nav class="fixed top-0 left-0 w-full z-[100] p-6 md:p-10 pointer-events-none">
     <div class="flex justify-between items-center w-full max-w-7xl mx-auto pointer-events-auto">
@@ -77,7 +77,7 @@
     </div>
   </nav>
 
-  <main class="flex-1 overflow-y-auto pb-16" x-cloak x-show="ready">
+  <main class="flex-1 overflow-y-auto pb-24 mt-0" x-cloak x-show="ready">
     
     <section class="relative h-[30vh] md:h-[35vh] w-full overflow-hidden">
       <img :src="hero" class="absolute inset-0 w-full h-full object-cover brightness-[0.45]" alt="Banner">
@@ -163,19 +163,20 @@
     <button @click="next()" class="absolute right-6 text-white text-7xl hover:text-[#ffc107]">›</button>
   </div>
 
-  <footer class="bg-[#1a1a1a] text-white py-4 px-12 border-t border-gray-800 flex-shrink-0">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
-            <div class="flex items-center gap-3">
-                <img src="..\imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 opacity-60 grayscale">
-                <div class="text-left border-l border-gray-700 pl-3 leading-tight font-bold">
-                    <p class="text-xs">Prefeitura de Nova Venécia</p>
-                    <p class="text-[9px] uppercase opacity-50 font-normal tracking-widest">Secretaria de Cultura e Turismo</p>
-                </div>
-            </div>
-            <p class="text-[10px] md:text-xs font-bold">© 2026 | Desenvolvido por IFES Campus Nova Venécia</p>
+  <!-- Footer fixo -->
+  <footer class="fixed bottom-0 w-full bg-[#1a1a1a] text-white py-4 px-6 md:px-12 border-t border-gray-800 flex-shrink-0 z-50">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+      <div class="flex items-center gap-3">
+        <img src="..\imagens/brasao/brasao_nv.png" alt="Logo" class="w-8 opacity-60 grayscale">
+        <div class="text-left border-l border-gray-700 pl-3 leading-tight font-bold">
+          <p class="text-xs">Prefeitura de Nova Venécia</p>
+          <p class="text-[9px] uppercase opacity-50 font-normal tracking-widest">Secretaria de Cultura e Turismo</p>
         </div>
-    </footer>
-
+      </div>
+      <p class="text-[10px] md:text-xs font-bold">© 2026 | Desenvolvido por IFES Campus Nova Venécia</p>
+    </div>
+  </footer>
+</body>
 
   <script>
     function tourismTemplate() {

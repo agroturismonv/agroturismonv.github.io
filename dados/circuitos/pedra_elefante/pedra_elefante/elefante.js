@@ -9,13 +9,13 @@ window.LOCAL_ELEFANTE = Object.freeze({
   cover: 'https://cdn.esbrasil.com.br/wp-content/uploads/2025/01/Nova-Venecia_nx081212001-1-1536x1024.jpg',
 
   // Imagem principal do Hero (Caminho relativo saindo de /layout/)
-  hero: '../imagens/elefante/pedra-elefante.jpg',
+  hero: 'dados/circuitos/pedra_elefante/pedra_elefante/images/pedra-elefante.jpg',
 
   // Galeria de fotos
   gallery: [
-    '../imagens/elefante/pedra-elefante.jpg',
-    '../imagens/elefante/pedra-elefante-2.jpg',
-    '../imagens/elefante/pedra-elefante-3.jpg'
+    'dados/circuitos/pedra_elefante/pedra_elefante/images/pedra-elefante.jpg',
+    'dados/circuitos/pedra_elefante/pedra_elefante/images/pedra-elefante-2.jpg',
+    'dados/circuitos/pedra_elefante/pedra_elefante/images/pedra-elefante-3.jpg'
   ],
 
   // Dados de geolocalização e mapas

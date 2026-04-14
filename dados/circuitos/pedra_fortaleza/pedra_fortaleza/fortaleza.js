@@ -1,14 +1,14 @@
 window.LOCAL_FORTALEZA = Object.freeze({
   id: 'fortaleza',
 
-  cover: '../imagens/fortaleza/fortaleza.jpg',
+  cover: 'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza.jpg',
 
-  hero: '../imagens/fortaleza/fortaleza-2.webp',
+  hero: 'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza-2.webp',
 
   gallery: [
-    '../imagens/fortaleza/fortaleza.jpg',
-    '../imagens/fortaleza/fortaleza-2.webp',
-    '../imagens/fortaleza/fortaleza-3.png'
+    'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza.jpg',
+    'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza-2.webp',
+    'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza-3.png'
   ],
 
   location: {

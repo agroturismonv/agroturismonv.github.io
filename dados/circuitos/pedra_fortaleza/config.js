@@ -5,10 +5,10 @@ window.CONFIG_PEDRA_FORTALEZA = Object.freeze({
   id: 'pedra_fortaleza',
   
   // Imagem para o Slider da Home (Caminho a partir da Raiz)
-  cover: '../imagens/fortaleza/fortaleza.jpg', 
+  cover: 'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza.jpg', 
   
   // Imagem para o Topo do circuitos.html (Caminho a partir de /layout/)
-  banner: '../imagens/fortaleza/fortaleza.jpg', 
+  banner: 'dados/circuitos/pedra_fortaleza/pedra_fortaleza/images/fortaleza.jpg', 
 
   texts: {
     pt: { 

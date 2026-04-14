@@ -9,12 +9,12 @@ window.LOCAL_GAMELEIRA = Object.freeze({
   cover: 'https://terracapixaba.com/wp-content/uploads/2024/02/gameleira-de-nova-venecia-2.webp',
 
   // Ajuste de caminho: saindo de /layout/ para a raiz /imagens/
-  hero: '../imagens/santuario/santuario-1.jpg',
+  hero: 'dados/circuitos/pedra_elefante/gameleira/images/santuario-1.jpg',
 
   gallery: [
-    '../imagens/santuario/santuario.webp',
-    '../imagens/santuario/santuario-1.jpg',
-    '../imagens/santuario/santuario-2.jpg'
+    'dados/circuitos/pedra_elefante/gameleira/images/santuario.webp',
+    'dados/circuitos/pedra_elefante/gameleira/images/santuario-1.jpg',
+    'dados/circuitos/pedra_elefante/gameleira/images/santuario-2.jpg'
   ],
 
   location: {

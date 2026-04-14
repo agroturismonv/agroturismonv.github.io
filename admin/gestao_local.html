@@ -14,10 +14,8 @@
         .input-premium {
             width: 100%;
             padding: 1rem;
-            background-color: #f9fafb;
+            background: #f9fafb;
             border-radius: 1rem;
-            border: none;
-            outline: none;
             font-weight: 700;
             color: #0f5132;
         }
@@ -27,14 +25,11 @@
         }
 
         .label-premium {
-            display: block;
             font-size: 9px;
             font-weight: 900;
             text-transform: uppercase;
             color: #9ca3af;
-            margin-bottom: 0.5rem;
             margin-left: 1rem;
-            font-style: italic;
         }
     </style>
 </head>
@@ -42,139 +37,89 @@
 <body class="bg-gray-100 p-6 md:p-12">
 <div class="max-w-5xl mx-auto bg-white rounded-[3rem] shadow-2xl overflow-hidden">
 
-<header class="bg-[#0f5132] p-10 text-white flex justify-between items-center">
-    <h2 class="text-2xl font-black uppercase italic">Painel de Cadastro</h2>
+<header class="bg-[#0f5132] p-10 text-white flex justify-between">
+    <h2 class="text-2xl font-black uppercase italic">Painel</h2>
 
     <div class="flex bg-black/20 p-1 rounded-xl">
         <button @click="isRegiao = true"
-            :class="isRegiao ? 'bg-[#ffc107] text-[#0f5132]' : 'text-white'"
-            class="px-4 py-2 rounded-lg text-[9px] font-black uppercase">
-            Região
-        </button>
+            :class="isRegiao ? 'bg-[#ffc107] text-[#0f5132]' : ''"
+            class="px-4 py-2 text-xs">Região</button>
 
         <button @click="isRegiao = false"
-            :class="!isRegiao ? 'bg-[#ffc107] text-[#0f5132]' : 'text-white'"
-            class="px-4 py-2 rounded-lg text-[9px] font-black uppercase ml-2">
-            Local
-        </button>
+            :class="!isRegiao ? 'bg-[#ffc107] text-[#0f5132]' : ''"
+            class="px-4 py-2 text-xs ml-2">Local</button>
     </div>
 </header>
 
 <div class="p-10 space-y-8">
 
-<!-- IDENTIFICAÇÃO -->
-<section class="grid md:grid-cols-2 gap-8">
-    <div class="space-y-4">
-
-        <template x-if="!isRegiao">
-            <div>
-                <label class="label-premium">Vincular à Região</label>
-                <select x-model="id_regiao" class="input-premium">
-                    <option value="">Escolha...</option>
-                    <template x-for="reg in regioes" :key="reg.id">
-                        <option :value="reg.id" x-text="reg.nome"></option>
-                    </template>
-                </select>
-            </div>
-        </template>
+<!-- IDS -->
+<section class="grid md:grid-cols-2 gap-6">
+    <div>
 
         <template x-if="isRegiao">
-            <div>
-                <label class="label-premium">ID Nova Região</label>
-                <input x-model="id_regiao"
-                       @input="id_regiao = sanitizarInput(id_regiao)"
-                       class="input-premium"
-                       placeholder="ex: regiao_norte">
-            </div>
+            <input x-model="id_regiao"
+                   @input="id_regiao = sanitizarInput(id_regiao)"
+                   placeholder="ID Região"
+                   class="input-premium">
         </template>
 
-        <div>
-            <label class="label-premium">ID do Local</label>
-            <input x-model="id_local"
-                   @input="id_local = sanitizarInput(id_local)"
-                   class="input-premium"
-                   placeholder="ex: cachoeira_xyz">
-        </div>
+        <template x-if="!isRegiao">
+            <select x-model="id_regiao" class="input-premium">
+                <option value="">Selecione</option>
+                <template x-for="r in regioes">
+                    <option :value="r.id" x-text="r.nome"></option>
+                </template>
+            </select>
+        </template>
+
+        <input x-model="id_local"
+               @input="id_local = sanitizarInput(id_local)"
+               placeholder="ID Local"
+               class="input-premium mt-3">
     </div>
 
-    <!-- GPS -->
-    <div class="bg-gray-50 p-6 rounded-3xl space-y-4">
-        <label class="label-premium">GPS / Google Maps</label>
-
-        <div class="flex gap-2">
-            <button @click="gps = 'link'"
-                :class="gps === 'link' ? 'bg-[#0f5132] text-white' : 'bg-gray-200'"
-                class="flex-1 py-2 rounded-lg text-[8px] font-black uppercase">Link</button>
-
-            <button @click="gps = 'coords'"
-                :class="gps === 'coords' ? 'bg-[#0f5132] text-white' : 'bg-gray-200'"
-                class="flex-1 py-2 rounded-lg text-[8px] font-black uppercase">Coordenadas</button>
-        </div>
-
-        <input x-show="gps === 'link'" x-model="map_link"
-               class="input-premium text-xs"
-               placeholder="Cole o link aqui">
-
-        <div x-show="gps === 'coords'" class="grid grid-cols-2 gap-2">
-            <input x-model="lat" placeholder="Lat" class="input-premium text-xs">
-            <input x-model="lng" placeholder="Lng" class="input-premium text-xs">
-        </div>
+    <!-- MAP -->
+    <div>
+        <input x-model="map_link"
+               placeholder="Link do Google Maps"
+               class="input-premium">
     </div>
 </section>
 
 <!-- TEXTOS -->
-<section class="grid md:grid-cols-2 gap-8 border-t pt-8">
-    <div class="space-y-4">
-        <label class="label-premium">Português</label>
+<section class="grid md:grid-cols-2 gap-6">
+
+    <div>
         <input x-model="pt.title" @blur="traduzir()" placeholder="Título" class="input-premium">
-        <input x-model="pt.subtitle" @blur="traduzir()" placeholder="Subtítulo" class="input-premium">
+        <input x-model="pt.subtitle" @blur="traduzir()" placeholder="Subtítulo" class="input-premium mt-2">
         <textarea x-model="pt.desc" @blur="traduzir()" placeholder="Descrição"
-                  class="input-premium h-24"></textarea>
+                  class="input-premium mt-2"></textarea>
+    </div>
+
+    <div class="text-xs space-y-2">
+        <div><b>EN:</b> <span x-text="en.title"></span></div>
+        <div><b>ES:</b> <span x-text="es.title"></span></div>
+        <div class="text-gray-400 italic">Tradução pode falhar — revise.</div>
     </div>
 </section>
 
 <!-- GALERIA -->
-<section class="border-t pt-8">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="label-premium">Galeria</h3>
-        <input type="file" multiple @change="upload" id="f" class="hidden">
-        <label for="f" class="bg-[#0f5132] text-white px-6 py-2 rounded-full text-[9px] font-black uppercase cursor-pointer">
-            Adicionar Fotos
-        </label>
-    </div>
-
-    <div class="grid grid-cols-4 gap-2">
-        <template x-for="(f, i) in fotos" :key="i">
-            <img :src="f.url"
-                 @click="cover = i"
-                 :class="cover === i ? 'ring-4 ring-[#ffc107]' : 'opacity-40'"
-                 class="h-20 w-full object-cover rounded-xl cursor-pointer">
-        </template>
-    </div>
-</section>
+<input type="file" multiple @change="upload">
 
 <!-- 360 -->
-<section class="border-t pt-8">
-    <label class="label-premium">Experiência 360º</label>
-
-    <div class="flex items-center gap-3">
-        <input type="checkbox" x-model="has360"
-               class="w-5 h-5 accent-[#0f5132] cursor-pointer">
-        <span class="text-xs font-bold uppercase text-gray-600">
-            Possui visualização 360º
-        </span>
-    </div>
+<div class="pt-6">
+    <label><input type="checkbox" x-model="has360"> Possui 360º</label>
 
     <input x-show="has360"
            x-model="ra_link"
-           class="input-premium text-xs mt-3"
+           class="input-premium mt-2"
            placeholder="https://novavenecia360.com.br/">
-</section>
+</div>
 
 <!-- BOTÃO -->
-<button @click="baixar()" :disabled="loading"
-    class="w-full bg-[#0f5132] text-white py-6 rounded-3xl font-black uppercase shadow-xl">
-    <span x-text="loading ? 'Gerando...' : '💾 Baixar ZIP'"></span>
+<button @click="baixar()" class="w-full bg-[#0f5132] text-white p-4 mt-6">
+    Baixar ZIP
 </button>
 
 </div>
@@ -186,98 +131,100 @@ function adminApp() {
         isRegiao: true,
         id_regiao: '',
         id_local: '',
-        gps: 'link',
         map_link: '',
-        lat: '',
-        lng: '',
-        loading: false,
 
         pt: { title: '', subtitle: '', desc: '' },
         en: { title: '', subtitle: '', desc: '' },
         es: { title: '', subtitle: '', desc: '' },
 
         fotos: [],
-        cover: 0,
         regioes: [],
 
         has360: false,
         ra_link: 'https://novavenecia360.com.br/',
 
-        init() {
-            const upd = () => {
-                if (window.LISTA_CIRCUITOS)
-                    this.regioes = window.LISTA_CIRCUITOS.map(r => ({
-                        id: r.id,
-                        nome: r.texts.pt.title
-                    }))
-            };
-            upd();
-            window.addEventListener('locais-ready', upd);
-        },
-
-        sanitizarInput(texto) {
-            if (!texto) return '';
-            return texto
-                .replace(/\s/g, '_')
+        sanitizarInput(t) {
+            return t.replace(/\s/g, '_')
                 .toLowerCase()
                 .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9_]/g, '');
+                .replace(/[\u0300-\u036f]/g, '');
+        },
+
+        gerarLinksMapa(link) {
+            const encoded = encodeURIComponent(link);
+
+            return {
+                maps: link,
+                embed: link + (link.includes('?') ? '&' : '?') + 'output=embed',
+                qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encoded}`
+            };
         },
 
         upload(e) {
-            this.fotos = Array.from(e.target.files).map(f => ({
-                file: f,
-                name: f.name,
-                url: URL.createObjectURL(f)
-            }));
+            this.fotos = Array.from(e.target.files);
+        },
+
+        async traduzir() {
+            const traduz = async (texto, target) => {
+                try {
+                    const r = await fetch("https://libretranslate.de/translate", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            q: texto,
+                            source: "pt",
+                            target: target,
+                            format: "text"
+                        })
+                    });
+                    const data = await r.json();
+                    return data.translatedText;
+                } catch {
+                    return '';
+                }
+            };
+
+            this.en.title = await traduz(this.pt.title, "en");
+            this.es.title = await traduz(this.pt.title, "es");
         },
 
         async baixar() {
-            this.loading = true;
+            const zip = new JSZip();
 
-            try {
-                const zip = new JSZip();
+            const localID = this.sanitizarInput(this.id_local || this.pt.title);
+            const regiaoID = this.sanitizarInput(this.id_regiao);
 
-                const localID = this.sanitizarInput(this.id_local || this.pt.title);
-                const regiaoID = this.sanitizarInput(this.id_regiao);
+            const mapa = this.gerarLinksMapa(this.map_link);
 
-                const payload = {
-                    tipo: this.isRegiao ? 'regiao' : 'local',
-                    regiao: regiaoID,
-                    local: localID,
-                    cover_file: this.fotos[this.cover]?.name || "",
-                    dados: {
-                        id: localID,
-                        location: { maps: this.map_link, embed: '', qr: '' },
-                        texts: {
-                            pt: { title: this.pt.title, subtitle: this.pt.subtitle, description: this.pt.desc },
-                            en: { title: this.en.title, subtitle: this.en.subtitle, description: this.en.desc },
-                            es: { title: this.es.title, subtitle: this.es.subtitle, description: this.es.desc }
-                        },
-                        gallery: this.fotos.map(f => f.name),
-                        RAvisionScreen: this.has360,
-                        RAvisionlink: this.has360
-                            ? (this.ra_link || 'https://novavenecia360.com.br/')
-                            : ''
-                    }
-                };
+            const payload = {
+                tipo: this.isRegiao ? 'regiao' : 'local',
+                regiao: regiaoID,
+                local: localID,
+                cover_file: '',
+                dados: {
+                    id: localID,
+                    location: mapa,
+                    texts: {
+                        pt: this.pt,
+                        en: this.en,
+                        es: this.es
+                    },
+                    gallery: this.fotos.map(f => f.name),
+                    RAvisionScreen: this.has360,
+                    RAvisionlink: this.has360 ? this.ra_link : ''
+                }
+            };
 
-                zip.file("config.json", JSON.stringify(payload));
-                this.fotos.forEach(f => zip.file(f.name, f.file));
+            zip.file("config.json", JSON.stringify(payload, null, 2));
 
-                const blob = await zip.generateAsync({ type: "blob" });
+            this.fotos.forEach(f => zip.file(f.name, f));
 
-                const a = document.createElement("a");
-                a.href = URL.createObjectURL(blob);
-                a.download = `pacote_${localID}.zip`;
-                a.click();
+            const blob = await zip.generateAsync({ type: "blob" });
 
-            } catch (e) {
-                alert(e.message);
-            } finally {
-                this.loading = false;
-            }
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `pacote_${localID}.zip`;
+            a.click();
         }
     }
 }

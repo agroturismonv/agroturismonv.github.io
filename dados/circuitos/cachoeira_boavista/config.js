@@ -19,6 +19,7 @@ window.CONFIG_CACHOEIRA_BOAVISTA = Object.freeze({
     }
   },
   locais: [
-    "boavista"
+    "boavista",
+    "lagoa_azul"
   ]
 });

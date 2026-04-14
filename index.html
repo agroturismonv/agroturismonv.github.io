@@ -57,11 +57,19 @@
 <body class="bg-gray-900 text-gray-800 flex flex-col font-sans">
 
     <header class="bg-[#0f5132] text-white z-50 shadow-lg flex-shrink-0">
-        <div class="flex justify-between items-center p-4 md:px-12 w-full mx-auto">
+        <div class="flex justify-between items-center p-4 md:px-12 w-full mx-auto"
+     style="
+        background-image: 
+        linear-gradient(rgba(15,81,50,0.95), rgba(15,81,50,0.95)),
+        url('imagens/leao/ouro.jpg');
+
+        background-size: 60px;
+        background-repeat: repeat;
+     ">
             <div class="flex items-center gap-4">
                 <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <img src="imagens/brasao/brasao_nv.png" alt="Brasão Nova Venécia" class="w-8 flex-shrink-0">
-                    <h1 class="text-sm md:text-xl font-black uppercase tracking-tighter">DESCOBRINDO O AGROTURISMO</h1>
+                    <h1 class="text-sm md:text-xl font-black uppercase tracking-tighter">Caminhos de Venécia</h1>
                 </a>
             </div>
 
@@ -110,9 +118,19 @@
         </button>
     </main>
 
-    <div x-show="showMenu" x-cloak x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-        class="fixed inset-0 z-[60] flex flex-col backdrop-blur-md" style="background-color: rgba(15, 81, 50, 0.9);">
+    <div x-show="showMenu" x-cloak
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     class="fixed inset-0 z-[60] flex flex-col backdrop-blur-md"
+     style="
+        background-image: 
+        linear-gradient(rgba(15,81,50,0.9), rgba(15,81,50,0.9)),
+        url('../imagens/leao/preto.png');
+        background-size: 120px; /* controla o tamanho */
+        background-repeat: repeat;
+        background-position: center;
+     ">
 
         <header class="p-6 flex justify-between items-center text-white">
             <div class="w-10"></div>

@@ -22,6 +22,11 @@
     "config": "dados/circuitos/centro_nv/config.js",
     "pontos": [
       {
+        "id": "casa_de_pedra_do_perletti",
+        "src": "dados/circuitos/centro_nv/casa_de_pedra_do_perletti/casa_de_pedra_do_perletti.js",
+        "var": "LOCAL_CASA_DE_PEDRA_DO_PERLETTI"
+      },
+      {
         "id": "igreja_sao_marcos",
         "src": "dados/circuitos/centro_nv/igreja_sao_marcos/igreja_sao_marcos.js",
         "var": "LOCAL_IGREJA_SAO_MARCOS"

@@ -15,7 +15,7 @@ window.CONFIG_CENTRO_NV = Object.freeze({
     title: "Centro",
     subtitle: "Donde todo comenzó"
   }},
-  locais: ["igreja_sao_marcos", "casa_de_pedra_do_perletti"]
+  locais: ['igreja_sao_marcos', 'casa_de_pedra_do_perletti']
 });
 
 

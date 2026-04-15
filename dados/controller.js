@@ -18,6 +18,16 @@
       }
     ]
   },
+  "centro_nv": {
+    "config": "dados/circuitos/centro_nv/config.js",
+    "pontos": [
+      {
+        "id": "igreja_sao_marcos",
+        "src": "dados/circuitos/centro_nv/igreja_sao_marcos/igreja_sao_marcos.js",
+        "var": "LOCAL_IGREJA_SAO_MARCOS"
+      }
+    ]
+  },
   "pedra_elefante": {
     "config": "dados/circuitos/pedra_elefante/config.js",
     "pontos": [

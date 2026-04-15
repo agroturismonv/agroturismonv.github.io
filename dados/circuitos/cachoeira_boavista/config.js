@@ -18,8 +18,5 @@ window.CONFIG_CACHOEIRA_BOAVISTA = Object.freeze({
       subtitle: "Refugio de aguas cristalinas."
     }
   },
-  locais: [
-    "boavista",
-    "lagoa_azul"
-  ]
+  locais: ['boavista']
 });

@@ -49,7 +49,7 @@ class SiteManager:
         # Regex para inserir no array locais: [...]
         new_content = re.sub(
             r'(locais:\s*\[)(.*?)(\])', 
-            lambda m: f'{m.group(1)}{m.group(2)}{", " if m.group(2).strip() else ""}"{local_id}"{m.group(3)}', 
+            lambda m: f"{m.group(1)}{m.group(2)}{', ' if m.group(2).strip() else ''}'{local_id}'{m.group(3)}", 
             content, flags=re.DOTALL
         )
         new_content = new_content.replace('[,', '[')

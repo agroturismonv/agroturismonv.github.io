@@ -90,33 +90,78 @@
         </div>
     </header>
 
-    <main class="flex-1 relative overflow-hidden bg-black">
-        <div class="h-full flex flex-col slider-container" :style="`transform: translateY(-${current * 100}%)`">
-            <template x-for="(slide, i) in slides" :key="slide.id">
-                <div class="h-full w-full relative flex items-center justify-center flex-shrink-0 p-4">
-                    <img :src="slide.cover" class="absolute inset-0 w-full h-full object-cover opacity-70">
-                    <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
-                    <div class="relative z-10 text-white text-center px-4 max-w-4xl mx-auto">
-                        <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic drop-shadow-2xl leading-none mb-4"
-                            x-text="slide.texts[lang]?.title"></h2>
-                        <p class="text-lg md:text-2xl font-light opacity-90 mb-8" x-text="slide.texts[lang]?.subtitle">
-                        </p>
-                        <a :href="`layout/circuitos.html?id=${slide.id}`"
-                            class="inline-block bg-[#ffc107] text-[#0f5132] px-10 py-4 rounded-full font-black text-lg shadow-xl hover:scale-110 transition-transform">EXPLORAR</a>
-                    </div>
-                </div>
-            </template>
-        </div>
+   <main class="flex-1 relative overflow-hidden bg-black"
+    x-data="{ 
+        touchStartY: 0, 
+        touchEndY: 0,
+        // Funções de navegação
+        next() { if (current < slides.length - 1) current++ },
+        prev() { if (current > 0) current-- },
+        handleSwipe() {
+            const threshold = 50;
+            const diff = this.touchStartY - this.touchEndY;
+            if (Math.abs(diff) > threshold) {
+                diff > 0 ? this.next() : this.prev();
+            }
+        }
+    }"
+    @touchstart="touchStartY = $event.touches[0].screenY"
+    @touchend="touchEndY = $event.changedTouches[0].screenY; handleSwipe()"
+    @keyup.window.up="prev()"
+    @keyup.window.down="next()">
 
-        <button @click="showMenu = true"
-            class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[40] bg-[#ffc107] text-[#0f5132] px-8 py-3 rounded-full font-black shadow-2xl flex items-center gap-2 border-2 border-[#0f5132] hover:scale-110 transition-all active:scale-95">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+    <div class="h-full flex flex-col slider-container transition-transform duration-700 ease-in-out" 
+         :style="`transform: translateY(-${current * 100}%)`">
+        
+        <template x-for="(slide, i) in slides" :key="slide.id">
+            <div class="h-full w-full relative flex items-center justify-center flex-shrink-0 p-4">
+                <img :src="slide.cover" class="absolute inset-0 w-full h-full object-cover opacity-70">
+                
+                <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80"></div>
+                
+                <div class="relative z-10 text-white text-center px-4 max-w-4xl mx-auto">
+                    <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic drop-shadow-2xl leading-none mb-4"
+                        x-text="slide.texts[lang]?.title"></h2>
+                    
+                    <p class="text-lg md:text-2xl font-light opacity-90 mb-8" 
+                       x-text="slide.texts[lang]?.subtitle"></p>
+                    
+                    <a :href="`layout/circuitos.html?id=${slide.id}`"
+                       class="inline-block bg-[#ffc107] text-[#0f5132] px-10 py-4 rounded-full font-black text-lg shadow-xl hover:scale-110 transition-transform">
+                       EXPLORAR
+                    </a>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <div class="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 z-30 flex-col gap-4">
+        <button @click="prev()" 
+                :disabled="current === 0"
+                class="p-4 rounded-full bg-white/10 text-white hover:bg-[#ffc107] hover:text-[#0f5132] transition-all backdrop-blur-md disabled:opacity-20 disabled:cursor-not-allowed group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:-translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
             </svg>
-            <span class="hidden md:inline" x-text="t.menu"></span>
         </button>
-    </main>
+
+        <button @click="next()" 
+                :disabled="current === slides.length - 1"
+                class="p-4 rounded-full bg-white/10 text-white hover:bg-[#ffc107] hover:text-[#0f5132] transition-all backdrop-blur-md disabled:opacity-20 disabled:cursor-not-allowed group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+    </div>
+
+    <button @click="showMenu = true"
+        class="absolute bottom-8 left-1/2 -translate-x-1/2 z-[40] bg-[#ffc107] text-[#0f5132] px-8 py-3 rounded-full font-black shadow-2xl flex items-center gap-2 border-2 border-[#0f5132] hover:scale-110 transition-all active:scale-95">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+        <span class="hidden md:inline" x-text="t.menu"></span>
+    </button>
+</main>
 
     <div x-show="showMenu" x-cloak
      x-transition:enter="transition ease-out duration-300"
